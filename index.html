@@ -1,6 +1,21 @@
 <!DOCTYPE html>
 <html>
+<head>
+<style>
+#circles {
+	position: absolute;
+	width: 100%;
+	height: 100%;
+	top: 0;
+	left: 0;
+	overflow: hidden;
+}
+</style>
+</head>
 <body>
-:]
+<div id="circles"></div>
+<script type="text/javascript">
+var s,c=300,a=document.getElementById("circles");while(c--){s=document.createElement("div");s.style.position="absolute";s.style.backgroundColor="hsla("+(230-c/2)+",50%,60%,"+(Math.random()*.6+.1)+")";s.style.width=s.style.height=Math.random()*60+"px";s.style.borderRadius="30px";s.style.zIndex=c-100;if(c<60)s.style.boxShadow="0 0 "+Math.random()*13+"px "+Math.random()*6+"px hsla("+(230-c/2)+",50%,60%,"+(Math.random()*.6+.1)+")";else s.style.border="1px solid hsla("+(230-c/2)+",50%,60%,"+(Math.random()*.6+.1)+")";s.y=s.style.top=Math.random()*window.innerHeight+25-50;s.x=s.style.left=Math.random()*window.innerWidth+25-50;a.appendChild(s)}window.onmousemove=function(e){var t=a.childNodes.length;while(t--){a.childNodes[t].style.left=a.childNodes[t].x+(e.x-window.innerWidth/3.5)/(t+1);a.childNodes[t].style.top=a.childNodes[t].y+(e.y-window.innerHeight/3.5)/(t+1)}}
+</script>
 </body>
 </html>
