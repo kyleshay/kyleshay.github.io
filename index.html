@@ -31,29 +31,25 @@ while(c--) {
 	s.x = s.style.left = (Math.random() *  window.innerWidth + 25) - 50;
 	a.appendChild(s);
 }
-asdf = 0
-addEventListener( 'deviceorientation', function(e) {
-		if(asdf < 20) {
-			console.log(e)
-			asdf ++
-		}
-		
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+	addEventListener( 'deviceorientation', function(e) {
+			var c = a.childNodes.length;
+			while(c--) {
+				a.childNodes[c].style.left = a.childNodes[c].x + e.beta*100/c;// + (e.x-(window.innerWidth/3.5))/(c+1);
+				a.childNodes[c].style.top = a.childNodes[c].y + e.gamma*100/c;// + (e.y-(window.innerHeight /3.5))/(c+1);
+			}
+
+			e.preventDefault();
+	}, false );
+} else {
+	window.onmousemove = function(e) {
 		var c = a.childNodes.length;
 		while(c--) {
-			a.childNodes[c].style.left = a.childNodes[c].x + e.beta;// + (e.x-(window.innerWidth/3.5))/(c+1);
-			a.childNodes[c].style.top = a.childNodes[c].y + e.gamma;// + (e.y-(window.innerHeight /3.5))/(c+1);
+			a.childNodes[c].style.left = a.childNodes[c].x + (e.x-(window.innerWidth/3.5))/(c+1);
+			a.childNodes[c].style.top = a.childNodes[c].y + (e.y-(window.innerHeight /3.5))/(c+1);
 		}
-
-		e.preventDefault();
-}, false );
-/*
-window.onmousemove = function(e) {
-	var c = a.childNodes.length;
-	while(c--) {
-		a.childNodes[c].style.left = a.childNodes[c].x + (e.x-(window.innerWidth/3.5))/(c+1);
-		a.childNodes[c].style.top = a.childNodes[c].y + (e.y-(window.innerHeight /3.5))/(c+1);
 	}
-}*/
+}
 </script>
 </body>
 </html>
