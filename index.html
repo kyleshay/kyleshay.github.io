@@ -14,13 +14,13 @@
 <body>
 <div id="circles"></div>
 <script type="text/javascript">
-var s, c = 5, a = document.getElementById("circles");
+var s, c = 300, a = document.getElementById("circles");
 
 while(c--) {
 	s = document.createElement('div');
 	s.style.position = 'absolute';
 	s.style.backgroundColor = 'hsla('+(230-c/2)+',50%,60%,'+((Math.random()*.6)+.1)+')';
-	s.style.width = s.style.height = (Math.random()*60)+50 + 'px';
+	s.style.width = s.style.height = (Math.random()*60) + 'px';
 	s.style.borderRadius =  '30px';
 	s.style.zIndex = c-100;
 	if(c < 60)
@@ -37,13 +37,13 @@ addEventListener( 'devicemotion', function(e) {
 		var beta = orientation === 1 ? -event.accelerationIncludingGravity.z : -event.accelerationIncludingGravity.z;
 		var gamma = orientation === 1 ? -event.accelerationIncludingGravity.y : -event.accelerationIncludingGravity.x;
 		
-		perspective.tx = ( ( gamma / 5 ) + 0.5 ) * 100;
-		perspective.ty = ( ( beta / 5 ) - 0.5 ) * 100;
+		x = ( ( gamma / 5 ) + 0.5 ) * 100;
+		y = ( ( beta / 5 ) - 0.5 ) * 100;
 		
 		var c = a.childNodes.length;
 		while(c--) {
-			a.childNodes[c].style.left = a.childNodes[c].x + beta;// + (e.x-(window.innerWidth/3.5))/(c+1);
-			a.childNodes[c].style.top = a.childNodes[c].y + gamma;// + (e.y-(window.innerHeight /3.5))/(c+1);
+			a.childNodes[c].style.left = a.childNodes[c].x + x;// + (e.x-(window.innerWidth/3.5))/(c+1);
+			a.childNodes[c].style.top = a.childNodes[c].y + y;// + (e.y-(window.innerHeight /3.5))/(c+1);
 		}
 
 		e.preventDefault();
