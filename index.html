@@ -43,7 +43,7 @@
 </head>
 <body>
 <div id="container">
-    <div id="pulldown" class="pull" style="left: 0;top: -640px;">
+    <div id="pulldown" class="pull" style="left: 0;">
         <div class="message" style="bottom: 20px;left: 130px;">
             <img class="call" />
             <img class="msg" />
@@ -51,7 +51,7 @@
         </div>
     </div>
 
-     <div id="pullleft" class="pull" style="top: 0;width:384px; left: -384px;">
+     <div id="pullleft" class="pull" style="top: 0;">
         <div class="message" style="top: 220px;right: 20px;">
             <img class="call" /><br />
             <img class="msg" /><br />
@@ -59,7 +59,7 @@
         </div>
     </div>
 
-    <div id="pullright" class="pull" style="top: 0;width:384px; right: -344px;">
+    <div id="pullright" class="pull" style="top: 0;">
         <div class="message" style="top: 220px;left: 20px;">
             <img class="call" /><br />
             <img class="msg" /><br />
@@ -71,7 +71,7 @@
         stuff here
     </div>
 
-    <div id="pullup" class="pull" style="left: 0;bottom: -600px;">
+    <div id="pullup" class="pull" style="left: 0;">
         <div class="message" style="top: 20px;left: 130px;">
             <img class="call" />
             <img class="msg" />
@@ -82,6 +82,20 @@
 <script src="hammer.js"></script>
 <script>
     var container = document.getElementById('container');
+    var content = document.getElementById('content');
+
+    var down = document.getElementById('pulldown');
+	var up = document.getElementById('pullup');
+	var left = document.getElementById('pullleft');
+	var right = document.getElementById('pullright');
+
+	container.width = content.width = up.width = down.width = left.width = right.width = screen.width;
+	container.height = content.height = up.height = down.height = left.height = right.height = screen.height;
+	down.style.top = '-' + screen.height + 'px';
+	left.style.left = '-' + screen.width + 'px';
+	right.style.right = '-' + (screen.width+40) + 'px';
+	up.style.bottom = '-' + (screen.height+40) + 'px';
+
     breakpoint = 50;
     Hammer(container).on("touch drag release", function(ev) {
         switch(ev.type) {
