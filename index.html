@@ -14,7 +14,7 @@
 <body>
 <div id="circles"></div>
 <script type="text/javascript">
-var s, c = 300, a = document.getElementById("circles");
+var s, c = 50, a = document.getElementById("circles");
 
 while(c--) {
 	s = document.createElement('div');
@@ -31,19 +31,17 @@ while(c--) {
 	s.x = s.style.left = (Math.random() *  window.innerWidth + 25) - 50;
 	a.appendChild(s);
 }
-
-addEventListener( 'devicemotion', function(e) {
-		var orientation = 1
-		var beta = orientation === 1 ? -event.accelerationIncludingGravity.z : -event.accelerationIncludingGravity.z;
-		var gamma = orientation === 1 ? -event.accelerationIncludingGravity.y : -event.accelerationIncludingGravity.x;
-		
-		x = ( ( gamma / 5 ) + 0.5 ) * 100;
-		y = ( ( beta / 5 ) - 0.5 ) * 100;
+asdf = 0
+addEventListener( 'deviceorientation', function(e) {
+		if(asdf < 20) {
+			console.log(e)
+			asdf ++
+		}
 		
 		var c = a.childNodes.length;
 		while(c--) {
-			a.childNodes[c].style.left = a.childNodes[c].x + x;// + (e.x-(window.innerWidth/3.5))/(c+1);
-			a.childNodes[c].style.top = a.childNodes[c].y + y;// + (e.y-(window.innerHeight /3.5))/(c+1);
+			a.childNodes[c].style.left = a.childNodes[c].x + e.beta;// + (e.x-(window.innerWidth/3.5))/(c+1);
+			a.childNodes[c].style.top = a.childNodes[c].y + e.gamma;// + (e.y-(window.innerHeight /3.5))/(c+1);
 		}
 
 		e.preventDefault();
