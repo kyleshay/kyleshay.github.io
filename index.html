@@ -89,12 +89,12 @@
 	var left = document.getElementById('pullleft');
 	var right = document.getElementById('pullright');
 
-	container.width = content.width = up.width = down.width = left.width = right.width = screen.width;
-	container.height = content.height = up.height = down.height = left.height = right.height = screen.height;
-	down.style.top = '-' + screen.height + 'px';
-	left.style.left = '-' + screen.width + 'px';
-	right.style.right = '-' + (screen.width+40) + 'px';
-	up.style.bottom = '-' + (screen.height+40) + 'px';
+	container.width = content.width = up.width = down.width = left.width = right.width = window.innerWidth;
+	container.height = content.height = up.height = down.height = left.height = right.height = window.innerHeight;
+	down.style.top = '-' + window.innerHeight + 'px';
+	left.style.left = '-' + window.innerWidth + 'px';
+	right.style.right = '-' + (window.innerWidth+40) + 'px';
+	up.style.bottom = '-' + (window.innerHeight+40) + 'px';
 
     breakpoint = 50;
     Hammer(container).on("touch drag release", function(ev) {
