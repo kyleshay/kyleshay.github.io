@@ -1,56 +1,121 @@
 <html>
 <head>
-<style>
-#circles {
-	position: absolute;
-	width: 100%;
-	height: 100%;
-	top: 0;
-	left: 0;
-	overflow: hidden;
-}
-</style>
+    <title>Hammer.js</title>
+    <meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
+    <meta http-equiv="X-UA-Compatible" content="IE=Edge" />
+    <style>
+        body { padding: 0; margin: 0; }
+        #container {
+            position: relative;
+            padding: 20px;
+            height: 640px;
+            width: 384px;
+        }
+        .pull {
+            display: block;
+            overflow: hidden;
+            position: absolute;
+            width: 384px;
+            height: 640px;
+            background: #ccc;
+            box-shadow: 0 0 10px 5px #bbb inset;
+        }
+        .pull .message {
+            position: absolute;
+            
+        }
+        img.call {
+            width:40px;
+            height:40px;
+            background:url(icons.png) -1 -7;
+        }
+        img.msg {
+            width:40px;
+            height:40px;
+            background:url(icons.png) -1 -74;
+        }
+        img.cal {
+            width:40px;
+            height:40px;
+            background:url(icons.png) -1 -137;
+        }
+    </style>
 </head>
 <body>
-<div id="circles"></div>
-<script type="text/javascript">
-var s, c = 50, a = document.getElementById("circles");
+<div id="container">
+    <div id="pulldown" class="pull" style="left: 0;top: -640px;">
+        <div class="message" style="bottom: 20px;left: 130px;">
+            <img class="call" />
+            <img class="msg" />
+            <img class="cal" />
+        </div>
+    </div>
 
-while(c--) {
-	s = document.createElement('div');
-	s.style.position = 'absolute';
-	s.style.backgroundColor = 'hsla('+(230-c/2)+',50%,60%,'+((Math.random()*.6)+.1)+')';
-	s.style.width = s.style.height = (Math.random()*60) + 'px';
-	s.style.borderRadius =  '30px';
-	s.style.zIndex = c-100;
-	if(c < 60)
-		s.style.boxShadow = '0 0 ' + Math.random()*13 + 'px ' + Math.random()*6 + 'px hsla('+(230-c/2)+',50%,60%,'+((Math.random()*.6)+.1)+')';
-	else 
-		s.style.border = '1px solid hsla('+(230-c/2)+',50%,60%,'+((Math.random()*.6)+.1)+')';
-	s.y = s.style.top = (Math.random() *  window.innerHeight + 25) - 50;
-	s.x = s.style.left = (Math.random() *  window.innerWidth + 25) - 50;
-	a.appendChild(s);
-}
-if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-	addEventListener( 'deviceorientation', function(e) {
-			var c = a.childNodes.length;
-			while(c--) {
-				a.childNodes[c].style.left = a.childNodes[c].x + e.beta*100/c;// + (e.x-(window.innerWidth/3.5))/(c+1);
-				a.childNodes[c].style.top = a.childNodes[c].y + e.gamma*100/c;// + (e.y-(window.innerHeight /3.5))/(c+1);
-			}
+     <div id="pullleft" class="pull" style="top: 0;width:384px; left: -384px;">
+        <div class="message" style="top: 220px;right: 20px;">
+            <img class="call" /><br />
+            <img class="msg" /><br />
+            <img class="cal" /><br />
+        </div>
+    </div>
 
-			e.preventDefault();
-	}, false );
-} else {
-	window.onmousemove = function(e) {
-		var c = a.childNodes.length;
-		while(c--) {
-			a.childNodes[c].style.left = a.childNodes[c].x + (e.x-(window.innerWidth/3.5))/(c+1);
-			a.childNodes[c].style.top = a.childNodes[c].y + (e.y-(window.innerHeight /3.5))/(c+1);
-		}
-	}
-}
+    <div id="pullright" class="pull" style="top: 0;width:384px; right: -344px;">
+        <div class="message" style="top: 220px;left: 20px;">
+            <img class="call" /><br />
+            <img class="msg" /><br />
+            <img class="cal" /><br />
+        </div>
+    </div>
+    
+    <div id="content" style="overflow:hidden">
+        stuff here
+    </div>
+
+    <div id="pullup" class="pull" style="left: 0;bottom: -600px;">
+        <div class="message" style="top: 20px;left: 130px;">
+            <img class="call" />
+            <img class="msg" />
+            <img class="cal" />
+        </div>
+    </div>
+</div>
+<script src="hammer.js"></script>
+<script>
+    var container = document.getElementById('container');
+    breakpoint = 50;
+    Hammer(container).on("touch drag release", function(ev) {
+        switch(ev.type) {
+            case 'release':
+                if(container.style.top.replace('px', '') >= breakpoint) {
+                    container.style.top = "80px";
+                } else if(-container.style.top.replace('px', '') >= breakpoint) {
+                    container.style.top = "-80px";
+                } else if(container.style.left.replace('px', '') >= breakpoint) {
+                    container.style.left = "80px";
+                } else if(-container.style.left.replace('px', '') >= breakpoint) {
+                    container.style.left = "-80px";
+                }
+                else {
+                    container.style.left = container.style.top = "0px";
+                }
+                break;
+            case 'drag':
+                switch(ev.gesture.direction) {
+                    case 'up':
+                    case 'down':
+                        container.style.left = "0px";
+                        container.style.top = ev.gesture.deltaY * 0.4+"px";
+                        break;
+                    case 'left':
+                    case 'right':
+                        container.style.top = "0px";
+                        container.style.left = ev.gesture.deltaX * 0.4+"px";
+                        break;
+                }
+                ev.gesture.preventDefault();
+                break;
+        }
+    });
 </script>
 </body>
 </html>
-	
