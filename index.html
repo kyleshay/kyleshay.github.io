@@ -14,7 +14,7 @@
 <body>
 <div id="circles"></div>
 <script type="text/javascript">
-var s, c = 50, a = document.getElementById("circles");
+var s, c = 500, a = document.getElementById("circles");
 
 while(c--) {
     s = document.createElement('div');
@@ -37,12 +37,12 @@ if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigat
             var c = a.childNodes.length;
             var left = e.beta*50/c,
                 top = e.gamma*50/c;
-            if( window.orientation == 90 || window.orientation == -90 ) {
+            if( window.orientation !== 90 || window.orientation !== -90 ) {
                 left = e.gamma*50/c;
                 left = e.beta*50/c;
             }
             while(c--) {
-                a.childNodes[c].style.left = a.childNodes[c].x + left;
+                a.childNodes[c].style.left = -(a.childNodes[c].x + left);
                 a.childNodes[c].style.top = a.childNodes[c].y + top;
             }
 
