@@ -32,15 +32,15 @@ while(c--) {
     a.appendChild(s);
 }
 if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
-    addEventListener( 'deviceorientation', function(e) {
+    addEventListener('deviceorientation', function(e) {
+
+            var c = a.childNodes.length;
             var left = e.beta*50/c,
                 top = e.gamma*50/c;
-            if( window.orientation !== 90 || window.orientation !== -90 ) {
+            if( window.orientation == 90 || window.orientation == -90 ) {
                 left = e.gamma*50/c;
                 left = e.beta*50/c;
             }
-            
-            var c = a.childNodes.length;
             while(c--) {
                 a.childNodes[c].style.left = a.childNodes[c].x + left;
                 a.childNodes[c].style.top = a.childNodes[c].y + top;
