@@ -1,7 +1,7 @@
 <html>
 <head>
 <style>
-#stars {
+#circles {
     position: absolute;
     width: 100%;
     height: 100%;
@@ -12,9 +12,9 @@
 </style>
 </head>
 <body>
-<div id="stars"></div>
+<div id="circles"></div>
 <script type="text/javascript">
-var s, c = 300, a = document.getElementById("stars");
+var s, c = 300, a = document.getElementById("circles");
 
 while(c--) {
     s = document.createElement('div');
@@ -31,14 +31,33 @@ while(c--) {
     s.x = s.style.left = (Math.random() *  window.innerWidth + 25) - 50;
     a.appendChild(s);
 }
+if(/Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent)) {
+    var left = e.beta*50/c,
+        top = e.gamma*50/c;
+    if( window.orientation !== 90 || window.orientation !== -90 ) {
+        left = e.gamma*50/c;
+        left = e.beta*50/c;
+    }
 
-window.onmousemove = function(e) {
-    var c = a.childNodes.length;
-    while(c--) {
-        a.childNodes[c].style.left = a.childNodes[c].x + (e.x-(window.innerWidth/3.5))/(c+1);
-        a.childNodes[c].style.top = a.childNodes[c].y + (e.y-(window.innerHeight /3.5))/(c+1);
+    addEventListener( 'deviceorientation', function(e) {
+            var c = a.childNodes.length;
+            while(c--) {
+                a.childNodes[c].style.left = a.childNodes[c].x + left;
+                a.childNodes[c].style.top = a.childNodes[c].y + top;
+            }
+
+            e.preventDefault();
+    }, false );
+} else {
+    window.onmousemove = function(e) {
+        var c = a.childNodes.length;
+        while(c--) {
+            a.childNodes[c].style.left = a.childNodes[c].x + (e.x-(window.innerWidth/3.5))/(c+1);
+            a.childNodes[c].style.top = a.childNodes[c].y + (e.y-(window.innerHeight /3.5))/(c+1);
+        }
     }
 }
 </script>
 </body>
 </html>
+    
